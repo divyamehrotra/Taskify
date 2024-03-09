@@ -4,7 +4,7 @@
         <navbar />
         <slot/>
         <home />
-        <TaskManager/>
+        <TaskBox/>
     </div>
 
 </template>
