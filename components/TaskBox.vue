@@ -3,17 +3,11 @@
         <div class="board">
             <div v-for="(column, columnIndex) in columns" :key="columnIndex" class="column">
                 <h2 class="column-title">{{ column.name }} ({{ column.tasks.length }})</h2>
-                <draggable v-model="columns[columnIndex].tasks"
-                           :group="{ name: 'tasks', put: true }"
-                           :item-key="task => task.id" 
-                           @change="saveData"
-                           @start="dragStart"
-                           @end="dragEnd"
-                           @add="dragAdd">
+                <draggable v-model="columns[columnIndex].tasks" :group="{ name: 'tasks', put: true }"
+                    :item-key="task => task.id" @change="saveData" @start="dragStart" @end="dragEnd" @add="dragAdd">
 
                     <template v-slot:item="{ element }">
-                        <div :key="element.id"
-                            :class="{ 'task': true, 'dragging': dragIndex === columnIndex }">
+                        <div :key="element.id" :class="{ 'task': true, 'dragging': dragIndex === columnIndex }">
                             {{ element.name }}
                             <button @click="deleteTask(columnIndex, element.id)" class="delete-button">
                                 <i class='bx bxs-message-alt-x'></i>
@@ -24,7 +18,10 @@
                 <input v-model="newTaskNames[columnIndex]" type="text" :placeholder="'+ New '"
                     @keyup.enter="addTask(columnIndex)" />
             </div>
-            <button @click="addColumn" class="add-column-button h-8 text-center text-sm ">Add Column</button>
+            <div class="buttons">
+                <button @click="addColumn" class="add-column-button h-8 text-center text-sm ">Add Status</button>
+                <button @click="deleteColumn" class="add-column-button h-8 text-center text-sm ">Delete Status</button>
+            </div>
         </div>
         <footer class="bg-pink-300 text-black py-4 fixed bottom-0 w-full">
             <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,10 +91,22 @@ export default {
             this.dragIndex = event.newIndex;
         },
         addColumn() {
-            const newColumnName = prompt('Enter the name of the new column:');
+            const newColumnName = prompt('Enter the name of the new status:');
             if (newColumnName) {
                 this.columns.push({ name: newColumnName, tasks: [] });
                 this.newTaskNames.push('');
+            }
+        },
+        deleteColumn() {
+            if (confirm('Are you sure you want to delete the last status?')) {
+                // Check if there are columns to delete
+                if (this.columns.length > 0) {
+                    // Remove the last column and its associated newTaskName
+                    this.columns.pop();
+                    this.newTaskNames.pop();
+                    // Save data to local storage
+                    this.saveData();
+                }
             }
         }
     }
@@ -132,11 +141,19 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 0.3s; /* Add transition for smooth color change */
+    transition: background-color 0.3s;
+    /* Add transition for smooth color change */
 }
 
 .task.dragging {
-    background-color: #f8f8f8; /* Change background color while dragging */
+    background-color: #f8f8f8;
+    /* Change background color while dragging */
+}
+
+.buttons {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .delete-button {
@@ -148,7 +165,7 @@ export default {
     font-size: large;
 }
 
-.delete-button i:hover{
+.delete-button i:hover {
     color: black;
 }
 
