@@ -5,5 +5,7 @@ export default defineNuxtConfig({
   css: [
     'boxicons/css/boxicons.min.css',
     '~/server/global.css'
-  ]
+  ],
+  pages: false,
+  
 })

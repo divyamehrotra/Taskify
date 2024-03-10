@@ -3,11 +3,14 @@
         <div class="board">
             <div v-for="(column, columnIndex) in columns" :key="columnIndex" class="column">
                 <h2 class="column-title">{{ column.name }} ({{ column.tasks.length }})</h2>
-                <draggable v-model="columns[columnIndex].tasks" :group="{ name: 'tasks', put: true }"
-                    @change="saveData"
-                    @start="dragStart"
-                    @end="dragEnd"
-                    @add="dragAdd">
+                <draggable v-model="columns[columnIndex].tasks"
+                           :group="{ name: 'tasks', put: true }"
+                           :item-key="task => task.id" 
+                           @change="saveData"
+                           @start="dragStart"
+                           @end="dragEnd"
+                           @add="dragAdd">
+
                     <template v-slot:item="{ element }">
                         <div :key="element.id"
                             :class="{ 'task': true, 'dragging': dragIndex === columnIndex }">
