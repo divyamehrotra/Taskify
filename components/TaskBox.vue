@@ -24,13 +24,14 @@
                 <input v-model="newTaskNames[columnIndex]" type="text" :placeholder="'+ New '"
                     @keyup.enter="addTask(columnIndex)" />
             </div>
+            <button @click="addColumn" class="add-column-button h-8 text-center text-sm ">Add Column</button>
         </div>
+        <footer class="bg-pink-300 text-black py-4 fixed bottom-0 w-full">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-center">© 2024 Taskify. All rights reserved. Made with love ❤️</p>
+            </div>
+        </footer>
     </div>
-    <footer class="bg-pink-300 text-black py-4 fixed bottom-0 w-full">
-      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-center">© 2024 Taskify. All rights reserved. Made with love ❤️</p>
-      </div>
-    </footer>
 </template>
 
 <script>
@@ -91,6 +92,13 @@ export default {
         dragAdd(event) {
             // Set dragIndex to the index of the column being dragged to
             this.dragIndex = event.newIndex;
+        },
+        addColumn() {
+            const newColumnName = prompt('Enter the name of the new column:');
+            if (newColumnName) {
+                this.columns.push({ name: newColumnName, tasks: [] });
+                this.newTaskNames.push('');
+            }
         }
     }
 };
@@ -142,6 +150,16 @@ export default {
 
 .delete-button i:hover{
     color: black;
+}
+
+.add-column-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #b87e9d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 768px) {
