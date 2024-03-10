@@ -3,8 +3,8 @@
     <div>
         <navbar />
         <slot/>
-        <home />
         <TaskBox/>
+        <!-- <home /> -->
     </div>
 
 </template>
