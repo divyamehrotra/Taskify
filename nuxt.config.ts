@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules:["@nuxtjs/tailwindcss","nuxt-icon"],
   css: [
-    'boxicons/css/boxicons.min.css'
-  ],
+    'boxicons/css/boxicons.min.css',
+    '~/server/global.css'
+  ]
 })

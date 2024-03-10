@@ -2,7 +2,10 @@
 
     <div>
         <navbar />
-        <TaskBox />
+        <h1>custom</h1>
+        <slot />
+        <footer/>
+    
     </div>
 
 </template>
